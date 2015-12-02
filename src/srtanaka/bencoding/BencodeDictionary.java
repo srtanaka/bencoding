@@ -1,6 +1,7 @@
 package srtanaka.bencoding;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -20,6 +21,7 @@ public class BencodeDictionary {
    *          - the dictionary to encode
    * @return an encoded byte string representation of the given input
    */
+  @SuppressWarnings("unchecked")
   public static String encode(Map<Object, Object> m) {
     TreeMap<Object, Object> map = new TreeMap<Object, Object>(m);
 
@@ -40,10 +42,17 @@ public class BencodeDictionary {
         sb.append(BencodeInteger.encode((int) value));
       } else if ( value instanceof String ) {
         sb.append(BencodeByteString.encode((String) value));
+      } else if ( value instanceof List ) {
+        sb.append(BencodeList.encode((List<Object>) value));
+      } else if ( value instanceof Map<?, ?> ) {
+        sb.append(BencodeDictionary.encode((Map<Object, Object>) value));
+      } else {
+        throw new IllegalArgumentException("Cannot encode unexpected type");
       }
     }
 
     sb.append(BencodeDictionary.SUFFIX);
+
     return sb.toString();
   }
 

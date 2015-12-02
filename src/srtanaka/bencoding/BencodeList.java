@@ -34,6 +34,8 @@ public class BencodeList {
         sb.append(BencodeList.encode((List<Object>) o));
       } else if ( o instanceof Map<?, ?> ) {
         sb.append(BencodeDictionary.encode((Map<Object, Object>) o));
+      } else {
+        throw new IllegalArgumentException("Cannot encode unexpected type");
       }
     }
 
