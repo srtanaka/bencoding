@@ -7,5 +7,6 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
   TestBencodingInteger.class,
   TestBencodingByteString.class,
+  TestBencodingList.class
 })
 public class BencodingTestSuite {}
