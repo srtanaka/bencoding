@@ -2,6 +2,7 @@ package srtanaka.bencoding;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 /**
  * Bencoding class to encode and decode dictionaries.
@@ -19,11 +20,13 @@ public class BencodeDictionary {
    * @return an encoded byte string representation of the given input
    */
   public static String encode(Map<Object, Object> m) {
+    TreeMap<Object, Object> map = new TreeMap<Object,Object>(m);
+
     StringBuilder sb = new StringBuilder();
 
     sb.append(BencodeDictionary.PREFIX);
 
-    for (Entry<Object, Object> e : m.entrySet()) {
+    for (Entry<Object, Object> e : map.entrySet()) {
       Object key = e.getKey();
       if ( !( key instanceof String ) ) {
         throw new IllegalArgumentException("Cannot encode non byte string keys");
