@@ -141,7 +141,7 @@ public class BencodeList {
           index += 2; // one for the ':', one to get to the next value
           break;
         case BencodeInteger.PREFIX:
-          index = s.indexOf(Bencoding.SUFFIX, index);
+          index = s.indexOf(BencodeInteger.SUFFIX, index);
           index++;
           break;
         case BencodeList.PREFIX:

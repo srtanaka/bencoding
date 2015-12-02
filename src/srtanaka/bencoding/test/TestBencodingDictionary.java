@@ -63,4 +63,14 @@ public class TestBencodingDictionary {
       fail("Throws exception: " + e.getMessage());
     }
   }
+  
+
+  @Test
+  public void testDecodeSimpleDictionary() {
+    try {
+      assertEquals(BencodeDictionary.decode(SIMPLE_DICT_BYTE_ENCODED), SIMPLE_DICT);
+    } catch ( Exception e ) {
+      fail("Throws exception: " + e.getMessage());
+    }
+  }
 }
