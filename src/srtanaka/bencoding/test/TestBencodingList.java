@@ -5,14 +5,12 @@ import static org.junit.Assert.fail;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import srtanaka.bencoding.BencodeList;
-import srtanaka.bencoding.Bencoding;
 
 public class TestBencodingList {
   static final Charset US_ASCII_CHARSET = Charset.forName("US-ASCII");
@@ -42,17 +40,26 @@ public class TestBencodingList {
   static final String LIST_LIST_STRING_ENCODED = "l" + 
     STRING_LIST_STRING_ENCODED + 
     "e";
+
+  static final String COMPLEX_LIST_STRING_ENCODED = "l" + 
+    TestBencodingByteString.STRING_1_STRING_ENCODED + 
+    MIXED_LIST_STRING_ENCODED +
+    TestBencodingInteger.POSITIVE_INT_1_STRING_ENCODED + 
+    LIST_LIST_STRING_ENCODED + 
+    "e";
   // @formatter:on
 
   static final byte[] STRING_LIST_BYTE_ENCODED = STRING_LIST_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
   static final byte[] INT_LIST_BYTE_ENCODED = INT_LIST_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
   static final byte[] MIXED_LIST_BYTE_ENCODED = MIXED_LIST_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
   static final byte[] LIST_LIST_BYTE_ENCODED = LIST_LIST_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
+  static final byte[] COMPLEX_LIST_BYTE_ENCODED = COMPLEX_LIST_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
 
   private static List<Object> STRING_LIST;
   private static List<Object> INT_LIST;
   private static List<Object> MIXED_LIST;
   private static List<Object> LIST_LIST;
+  private static List<Object> COMPLEX_LIST;
 
   @Before
   public void setup() {
@@ -76,7 +83,13 @@ public class TestBencodingList {
 
     LIST_LIST = new ArrayList<Object>();
     LIST_LIST.add(STRING_LIST);
-  }
+    
+    COMPLEX_LIST = new ArrayList<Object>();
+    COMPLEX_LIST.add(TestBencodingByteString.STRING_1);
+    COMPLEX_LIST.add(MIXED_LIST);
+    COMPLEX_LIST.add(TestBencodingInteger.POSITIVE_INT_1);
+    COMPLEX_LIST.add(LIST_LIST);
+    }
 
   @Test
   public void testEncodeStringList() {
@@ -97,12 +110,11 @@ public class TestBencodingList {
   public void testEncodeListList() {
     assertEquals(BencodeList.encode(LIST_LIST), LIST_LIST_STRING_ENCODED);
   }
-  
 
   @Test
   public void testDecodeStringList() {
     try {
-      assertEquals(Bencoding.decode(STRING_LIST_BYTE_ENCODED), STRING_LIST);
+      assertEquals(BencodeList.decode(STRING_LIST_BYTE_ENCODED), STRING_LIST);
     } catch ( Exception e ) {
       fail("Throws exception: " + e.getMessage());
     }
@@ -111,7 +123,16 @@ public class TestBencodingList {
   @Test
   public void testDecodeIntList() {
     try {
-      assertEquals(Bencoding.decode(INT_LIST_BYTE_ENCODED), INT_LIST);
+      assertEquals(BencodeList.decode(INT_LIST_BYTE_ENCODED), INT_LIST);
+    } catch ( Exception e ) {
+      fail("Throws exception: " + e.getMessage());
+    }
+  }
+
+  @Test
+  public void testDecodeListList() {
+    try {
+      assertEquals(BencodeList.decode(LIST_LIST_BYTE_ENCODED), LIST_LIST);
     } catch ( Exception e ) {
       fail("Throws exception: " + e.getMessage());
     }
