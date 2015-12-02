@@ -37,13 +37,14 @@ public class Bencoding {
    * @return an encoded byte string representation of the given input
    * @throws IllegalArgumentException
    */
+  @SuppressWarnings("unchecked")
   public static byte[] encode(Object o, Charset c) throws IllegalArgumentException {
     if ( o instanceof Integer ) {
       return BencodeInteger.encode((int) o).getBytes(c);
     } else if ( o instanceof String ) {
       return BencodeByteString.encode((String) o).getBytes(c);
     } else if (o instanceof List) {
-      return BencodeList.encode((List) o).getBytes(c);
+      return BencodeList.encode((List<Object>) o).getBytes(c);
     } else {
       throw new IllegalArgumentException("Cannot encode this type of object!");
     }

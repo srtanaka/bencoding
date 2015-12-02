@@ -17,6 +17,7 @@ public class BencodeList {
    *          - the list to encode
    * @return an encoded byte string representation of the given input
    */
+  @SuppressWarnings("unchecked")
   public static String encode(List<Object> l) {
     StringBuilder sb = new StringBuilder();
 
@@ -27,6 +28,8 @@ public class BencodeList {
         sb.append(BencodeInteger.encode((int) o));
       } else if ( o instanceof String ) {
         sb.append(BencodeByteString.encode((String) o));
+      } else if ( o instanceof List ) {
+        sb.append(BencodeList.encode((List<Object>) o));
       }
     }
 
