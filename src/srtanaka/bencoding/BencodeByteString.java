@@ -1,6 +1,5 @@
 package srtanaka.bencoding;
 
-import java.nio.charset.Charset;
 
 /**
  * Bencoding class to encode and decode byte strings.
@@ -10,7 +9,6 @@ import java.nio.charset.Charset;
  */
 public class BencodeByteString {
   public static final char SEPARATOR = ':';
-  private static final Charset US_ASCII_CHARSET = Charset.forName("US-ASCII");
 
   /**
    * @param s
@@ -30,7 +28,7 @@ public class BencodeByteString {
    *           if the encoding is malformed
    */
   public static String decode(byte[] b) throws MalformedBencodingException {
-    String s = new String(b, US_ASCII_CHARSET);
+    String s = new String(b, Bencoding.US_ASCII_CHARSET);
     return BencodeByteString.decode(s);
   }
 
