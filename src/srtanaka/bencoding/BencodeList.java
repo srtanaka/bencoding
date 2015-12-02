@@ -104,6 +104,13 @@ public class BencodeList {
           l.add(BencodeList.decode(substring));
           s = s.substring(endIndex + 1);
           break;
+        case BencodeDictionary.PREFIX:
+          endIndex = BencodeList.findEndIndex(s.substring(1), 1);
+          endIndex += 1; // extra to include delimiter
+          substring = s.substring(0, endIndex + 1);
+          l.add(BencodeDictionary.decode(substring));
+          s = s.substring(endIndex + 1);
+          break;
         default:
           throw new MalformedBencodingException("List not encoded properly");
       }
@@ -145,6 +152,7 @@ public class BencodeList {
           index++;
           break;
         case BencodeList.PREFIX:
+        case BencodeDictionary.PREFIX:
           level++;
           index = findEndIndex(s.substring(index + 1), level);
           break;

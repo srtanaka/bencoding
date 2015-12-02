@@ -174,4 +174,23 @@ public class TestBencodingList {
       fail("Throws exception: " + e.getMessage());
     }
   }
+
+  @Test
+  public void testDecodeDictList() {
+    try {
+      assertEquals(BencodeList.decode(DICT_LIST_BYTE_ENCODED), DICT_LIST);
+    } catch ( Exception e ) {
+      fail("Throws exception: " + e.getMessage());
+    }
+  }
+  
+
+  @Test
+  public void testDecodeComplexList() {
+    try {
+      assertEquals(BencodeList.decode(COMPLEX_LIST_BYTE_ENCODED), COMPLEX_LIST);
+    } catch ( Exception e ) {
+      fail("Throws exception: " + e.getMessage());
+    }
+  }
 }
