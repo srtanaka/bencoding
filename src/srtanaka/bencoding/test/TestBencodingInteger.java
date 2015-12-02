@@ -61,4 +61,16 @@ public class TestBencodingInteger {
     assertEquals(BencodeInteger.decode(POSITIVE_INT_2_BYTE_ENCODED), POSITIVE_INT_2);
     assertEquals(BencodeInteger.decode(POSITIVE_INT_3_BYTE_ENCODED), POSITIVE_INT_3);
   }
+
+  @Test
+  public void testDecodeZeroInteger() {
+    assertEquals(BencodeInteger.decode(ZERO_INT_BYTE_ENCODED), ZERO_INT);
+  }
+
+  @Test
+  public void testDecodeNegativeInteger() {
+    assertEquals(BencodeInteger.decode(NEGATIVE_INT_1_BYTE_ENCODED), NEGATIVE_INT_1);
+    assertEquals(BencodeInteger.decode(NEGATIVE_INT_2_BYTE_ENCODED), NEGATIVE_INT_2);
+    assertEquals(BencodeInteger.decode(NEGATIVE_INT_3_BYTE_ENCODED), NEGATIVE_INT_3);
+  }
 }
