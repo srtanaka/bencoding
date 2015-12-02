@@ -90,6 +90,8 @@ public class Bencoding {
         return BencodeByteString.decode(s);
       case BencodeInteger.PREFIX:
         return BencodeInteger.decode(s);
+      case BencodeList.PREFIX:
+        return BencodeList.decode(s);
       default:
         throw new MalformedBencodingException(
           "Malformed encoding, could not decode!");

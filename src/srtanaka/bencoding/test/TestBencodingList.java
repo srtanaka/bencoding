@@ -97,4 +97,23 @@ public class TestBencodingList {
   public void testEncodeListList() {
     assertEquals(BencodeList.encode(LIST_LIST), LIST_LIST_STRING_ENCODED);
   }
+  
+
+  @Test
+  public void testDecodeStringList() {
+    try {
+      assertEquals(Bencoding.decode(STRING_LIST_BYTE_ENCODED), STRING_LIST);
+    } catch ( Exception e ) {
+      fail("Throws exception: " + e.getMessage());
+    }
+  }
+
+  @Test
+  public void testDecodeIntList() {
+    try {
+      assertEquals(Bencoding.decode(INT_LIST_BYTE_ENCODED), INT_LIST);
+    } catch ( Exception e ) {
+      fail("Throws exception: " + e.getMessage());
+    }
+  }
 }
