@@ -22,4 +22,19 @@ public class BencodeInteger {
     String s = BencodeInteger.PREFIX + Integer.toString(i) + BencodeInteger.SUFFIX;
     return s.getBytes(US_ASCII_CHARSET);
   }
+
+  /**
+   * @param b
+   *          - the byte string to decode
+   * @return the decoded integer
+   */
+  public static int decode(byte[] b) throws MalformedBencodingException {
+    String s = new String(b, US_ASCII_CHARSET);
+
+    if ( !s.startsWith(String.valueOf(PREFIX)) || !s.endsWith(String.valueOf(SUFFIX)) ) {
+      throw new MalformedBencodingException("Integer not encoded properly");
+    }
+
+    return Integer.parseInt(s.substring(1, s.length() - 1));
+  }
 }

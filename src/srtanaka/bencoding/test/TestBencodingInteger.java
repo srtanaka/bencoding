@@ -1,6 +1,7 @@
 package srtanaka.bencoding.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -60,21 +61,33 @@ public class TestBencodingInteger {
 
   @Test
   public void testDecodeInteger() {
-    assertEquals(BencodeInteger.decode(POSITIVE_INT_1_BYTE_ENCODED), POSITIVE_INT_1);
-    assertEquals(BencodeInteger.decode(POSITIVE_INT_2_BYTE_ENCODED), POSITIVE_INT_2);
-    assertEquals(BencodeInteger.decode(POSITIVE_INT_3_BYTE_ENCODED), POSITIVE_INT_3);
+    try {
+      assertEquals(BencodeInteger.decode(POSITIVE_INT_1_BYTE_ENCODED), POSITIVE_INT_1);
+      assertEquals(BencodeInteger.decode(POSITIVE_INT_2_BYTE_ENCODED), POSITIVE_INT_2);
+      assertEquals(BencodeInteger.decode(POSITIVE_INT_3_BYTE_ENCODED), POSITIVE_INT_3);
+    } catch ( MalformedBencodingException e ) {
+      fail("Throws MalformedBencodingException: " + e.getMessage());
+    }
   }
 
   @Test
   public void testDecodeZeroInteger() {
-    assertEquals(BencodeInteger.decode(ZERO_INT_BYTE_ENCODED), ZERO_INT);
+    try {
+      assertEquals(BencodeInteger.decode(ZERO_INT_BYTE_ENCODED), ZERO_INT);
+    } catch ( MalformedBencodingException e ) {
+      fail("Throws MalformedBencodingException: " + e.getMessage());
+    }
   }
 
   @Test
   public void testDecodeNegativeInteger() {
-    assertEquals(BencodeInteger.decode(NEGATIVE_INT_1_BYTE_ENCODED), NEGATIVE_INT_1);
-    assertEquals(BencodeInteger.decode(NEGATIVE_INT_2_BYTE_ENCODED), NEGATIVE_INT_2);
-    assertEquals(BencodeInteger.decode(NEGATIVE_INT_3_BYTE_ENCODED), NEGATIVE_INT_3);
+    try {
+      assertEquals(BencodeInteger.decode(NEGATIVE_INT_1_BYTE_ENCODED), NEGATIVE_INT_1);
+      assertEquals(BencodeInteger.decode(NEGATIVE_INT_2_BYTE_ENCODED), NEGATIVE_INT_2);
+      assertEquals(BencodeInteger.decode(NEGATIVE_INT_3_BYTE_ENCODED), NEGATIVE_INT_3);
+    } catch ( MalformedBencodingException e ) {
+      fail("Throws MalformedBencodingException: " + e.getMessage());
+    }
   }
 
   @Test(expected = MalformedBencodingException.class)
