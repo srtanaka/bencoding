@@ -123,8 +123,35 @@ public class BencodeDictionary {
           }
           s = s.substring(endIndex + 1);
           break;
+        case BencodeList.PREFIX:
+          endIndex = Bencoding.findEndIndex(s.substring(1), 1);
+          endIndex++;
+          substring = s.substring(0, endIndex + 1);
+          if ( key == null ) {
+            throw new MalformedBencodingException(
+              "Missing key for this dictionary entry");
+          } else {
+            d.put(key, BencodeList.decode(substring));
+            key = null;
+          }
+          s = s.substring(endIndex + 1);
+          break;
+        case BencodeDictionary.PREFIX:
+          endIndex = Bencoding.findEndIndex(s.substring(1), 1);
+          endIndex++;
+          substring = s.substring(0, endIndex + 1);
+          if ( key == null ) {
+            throw new MalformedBencodingException(
+              "Missing key for this dictionary entry");
+          } else {
+            d.put(key, BencodeDictionary.decode(substring));
+            key = null;
+          }
+          s = s.substring(endIndex + 1);
+          break;
         default:
-          throw new MalformedBencodingException("List not encoded properly");
+          throw new MalformedBencodingException(
+            "Dictionary not encoded properly");
       }
     }
 

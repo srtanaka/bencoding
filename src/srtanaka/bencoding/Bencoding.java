@@ -100,4 +100,58 @@ public class Bencoding {
           "Malformed encoding, could not decode!");
     }
   }
+
+  /**
+   * Helper method used to find the appropriate end character index for lists
+   * and dictionaries.
+   * 
+   * @param s
+   *          - the string to search for an ending character
+   * @param level
+   *          - the measure of how nested this search is
+   * @return - the index of the appropriate end character
+   * @throws MalformedBencodingException
+   */
+  static int findEndIndex(String s, int level) throws MalformedBencodingException {
+    int index = 0;
+    while ( index < s.length() ) {
+      switch ( s.charAt(index) ) {
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+          index += Integer.parseInt(s.substring(index, s.indexOf(String.valueOf(BencodeByteString.SEPARATOR), index)));
+          index += 2; // one for the ':', one to get to the next value
+          break;
+        case BencodeInteger.PREFIX:
+          index = s.indexOf(BencodeInteger.SUFFIX, index);
+          index++;
+          break;
+        case BencodeList.PREFIX:
+        case BencodeDictionary.PREFIX:
+          level++;
+          index = findEndIndex(s.substring(index + 1), level);
+          break;
+        case SUFFIX:
+          level--;
+          if ( level <= 0 ) {
+            return index;
+          } else {
+            index++;
+            break;
+          }
+        default:
+          index++;
+          break;
+      }
+    }
+    throw new MalformedBencodingException(
+      "Malformed encoding, could not decode!");
+  }
 }

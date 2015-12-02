@@ -111,4 +111,13 @@ public class TestBencodingDictionary {
       fail("Throws exception: " + e.getMessage());
     }
   }
+  
+  @Test
+  public void testDecodeComplexDictionary() {
+    try {
+      assertEquals(BencodeDictionary.decode(COMPLEX_DICT_BYTE_ENCODED), COMPLEX_DICT);
+    } catch ( Exception e ) {
+      fail("Throws exception: " + e.getMessage());
+    }
+  }
 }
