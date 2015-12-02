@@ -2,6 +2,7 @@ package srtanaka.bencoding;
 
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Bencoding control class to delegate encoding/decoding work.
@@ -43,8 +44,10 @@ public class Bencoding {
       return BencodeInteger.encode((int) o).getBytes(c);
     } else if ( o instanceof String ) {
       return BencodeByteString.encode((String) o).getBytes(c);
-    } else if (o instanceof List) {
+    } else if ( o instanceof List ) {
       return BencodeList.encode((List<Object>) o).getBytes(c);
+    } else if ( o instanceof Map ) {
+      return BencodeDictionary.encode((Map<Object, Object>) o).getBytes(c);
     } else {
       throw new IllegalArgumentException("Cannot encode this type of object!");
     }
