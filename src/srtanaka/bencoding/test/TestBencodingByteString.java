@@ -70,6 +70,6 @@ public class TestBencodingByteString {
 
   @Test(expected = MalformedBencodingException.class)
   public void testDecodeNoSeparatorByteString() throws MalformedBencodingException {
-    BencodeByteString.decode(MALFORMED_1_ENCODED);
+    BencodeByteString.decode(MALFORMED_2_ENCODED);
   }
 }
