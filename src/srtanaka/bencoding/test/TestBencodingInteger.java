@@ -10,14 +10,48 @@ import org.junit.Test;
 import srtanaka.bencoding.BencodeInteger;
 
 public class TestBencodingInteger {
-  static final int INT = 123;
+  static final Charset US_ASCII_CHARSET = Charset.forName("US-ASCII");
 
-  static final String INT_STRING_ENCODED = "i123e";
-
-  static final byte[] INT_BYTE_ENCODED = INT_STRING_ENCODED.getBytes(Charset.forName("US-ASCII"));
+  static final int POSITIVE_INT_1 = 123;
+  static final int POSITIVE_INT_2 = 2345;
+  static final int POSITIVE_INT_3 = 34567;
+  static final int ZERO_INT = 0;
+  static final int NEGATIVE_INT_1 = -456;
+  static final int NEGATIVE_INT_2 = -5678;
+  static final int NEGATIVE_INT_3 = -67890;
+  
+  static final String POSITIVE_INT_1_STRING_ENCODED = "i123e";
+  static final String POSITIVE_INT_2_STRING_ENCODED = "i2345e";
+  static final String POSITIVE_INT_3_STRING_ENCODED = "i34567e";
+  static final String ZERO_INT_STRING_ENCODED = "i0e";
+  static final String NEGATIVE_INT_1_STRING_ENCODED = "i-456e";
+  static final String NEGATIVE_INT_2_STRING_ENCODED = "i-5678e";
+  static final String NEGATIVE_INT_3_STRING_ENCODED = "i-67890e";
+  
+  static final byte[] POSITIVE_INT_1_BYTE_ENCODED = POSITIVE_INT_1_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
+  static final byte[] POSITIVE_INT_2_BYTE_ENCODED = POSITIVE_INT_2_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
+  static final byte[] POSITIVE_INT_3_BYTE_ENCODED = POSITIVE_INT_3_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
+  static final byte[] ZERO_INT_BYTE_ENCODED = ZERO_INT_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
+  static final byte[] NEGATIVE_INT_1_BYTE_ENCODED = NEGATIVE_INT_1_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
+  static final byte[] NEGATIVE_INT_2_BYTE_ENCODED = NEGATIVE_INT_2_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
+  static final byte[] NEGATIVE_INT_3_BYTE_ENCODED = NEGATIVE_INT_3_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
 
   @Test
   public void testEncodeInteger() {
-    assertEquals(Arrays.toString(BencodeInteger.encode(INT)), Arrays.toString(INT_BYTE_ENCODED));
+    assertEquals(Arrays.toString(BencodeInteger.encode(POSITIVE_INT_1)), Arrays.toString(POSITIVE_INT_1_BYTE_ENCODED));
+    assertEquals(Arrays.toString(BencodeInteger.encode(POSITIVE_INT_2)), Arrays.toString(POSITIVE_INT_2_BYTE_ENCODED));
+    assertEquals(Arrays.toString(BencodeInteger.encode(POSITIVE_INT_3)), Arrays.toString(POSITIVE_INT_3_BYTE_ENCODED));
+  }
+
+  @Test
+  public void testEncodeZeroInteger() {
+    assertEquals(Arrays.toString(BencodeInteger.encode(ZERO_INT)), Arrays.toString(ZERO_INT_BYTE_ENCODED));
+  }
+
+  @Test
+  public void testEncodeNegativeInteger() {
+    assertEquals(Arrays.toString(BencodeInteger.encode(NEGATIVE_INT_1)), Arrays.toString(NEGATIVE_INT_1_BYTE_ENCODED));
+    assertEquals(Arrays.toString(BencodeInteger.encode(NEGATIVE_INT_2)), Arrays.toString(NEGATIVE_INT_2_BYTE_ENCODED));
+    assertEquals(Arrays.toString(BencodeInteger.encode(NEGATIVE_INT_3)), Arrays.toString(NEGATIVE_INT_3_BYTE_ENCODED));
   }
 }
