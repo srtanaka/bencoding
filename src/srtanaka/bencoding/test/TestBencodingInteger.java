@@ -8,6 +8,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import srtanaka.bencoding.BencodeInteger;
+import srtanaka.bencoding.MalformedBencodingException;
 
 public class TestBencodingInteger {
   static final Charset US_ASCII_CHARSET = Charset.forName("US-ASCII");
@@ -35,6 +36,8 @@ public class TestBencodingInteger {
   static final byte[] NEGATIVE_INT_1_BYTE_ENCODED = NEGATIVE_INT_1_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
   static final byte[] NEGATIVE_INT_2_BYTE_ENCODED = NEGATIVE_INT_2_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
   static final byte[] NEGATIVE_INT_3_BYTE_ENCODED = NEGATIVE_INT_3_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
+
+  static final byte[] MALFORMED_BYTE_ENCODED = "i1234".getBytes(US_ASCII_CHARSET);
 
   @Test
   public void testEncodeInteger() {
@@ -72,5 +75,10 @@ public class TestBencodingInteger {
     assertEquals(BencodeInteger.decode(NEGATIVE_INT_1_BYTE_ENCODED), NEGATIVE_INT_1);
     assertEquals(BencodeInteger.decode(NEGATIVE_INT_2_BYTE_ENCODED), NEGATIVE_INT_2);
     assertEquals(BencodeInteger.decode(NEGATIVE_INT_3_BYTE_ENCODED), NEGATIVE_INT_3);
+  }
+
+  @Test(expected = MalformedBencodingException.class)
+  public void testDecodeMalEncodedInteger() throws MalformedBencodingException {
+    BencodeInteger.decode(MALFORMED_BYTE_ENCODED);
   }
 }
