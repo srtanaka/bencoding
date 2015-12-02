@@ -45,4 +45,50 @@ public class Bencoding {
       throw new IllegalArgumentException("Cannot encode this type of object!");
     }
   }
+
+  /**
+   * Convenience method to decode an encoded byte string without having to know
+   * its contents.
+   * 
+   * @param b
+   *          - the byte string to decode
+   * @return a decoded object.
+   * @throws MalformedBencodingException
+   *           if the encoding is malformed
+   */
+  public static Object decode(byte[] b) throws MalformedBencodingException {
+    String s = new String(b, Bencoding.US_ASCII_CHARSET);
+    return decode(s);
+  }
+
+  /**
+   * Convenience method to decode an encoded string without having to know its
+   * contents.
+   * 
+   * @param s
+   *          - the string to decode
+   * @return a decoded object.
+   * @throws MalformedBencodingException
+   *           if the encoding is malformed
+   */
+  public static Object decode(String s) throws MalformedBencodingException {
+    switch ( s.charAt(0) ) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        return BencodeByteString.decode(s);
+      case BencodeInteger.PREFIX:
+        return BencodeInteger.decode(s);
+      default:
+        throw new MalformedBencodingException(
+          "Malformed encoding, could not decode!");
+    }
+  }
 }

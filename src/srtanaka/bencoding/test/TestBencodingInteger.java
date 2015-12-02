@@ -4,12 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.nio.charset.Charset;
-import java.util.Arrays;
 
 import org.junit.Test;
 
 import srtanaka.bencoding.BencodeInteger;
-import srtanaka.bencoding.Bencoding;
 import srtanaka.bencoding.MalformedBencodingException;
 
 public class TestBencodingInteger {
@@ -43,21 +41,21 @@ public class TestBencodingInteger {
 
   @Test
   public void testEncodeInteger() {
-    assertEquals(Arrays.toString(Bencoding.encode(POSITIVE_INT_1)), Arrays.toString(POSITIVE_INT_1_BYTE_ENCODED));
-    assertEquals(Arrays.toString(Bencoding.encode(POSITIVE_INT_2)), Arrays.toString(POSITIVE_INT_2_BYTE_ENCODED));
-    assertEquals(Arrays.toString(Bencoding.encode(POSITIVE_INT_3)), Arrays.toString(POSITIVE_INT_3_BYTE_ENCODED));
+    assertEquals(BencodeInteger.encode(POSITIVE_INT_1), POSITIVE_INT_1_STRING_ENCODED);
+    assertEquals(BencodeInteger.encode(POSITIVE_INT_2), POSITIVE_INT_2_STRING_ENCODED);
+    assertEquals(BencodeInteger.encode(POSITIVE_INT_3), POSITIVE_INT_3_STRING_ENCODED);
   }
 
   @Test
   public void testEncodeZeroInteger() {
-    assertEquals(Arrays.toString(Bencoding.encode(ZERO_INT)), Arrays.toString(ZERO_INT_BYTE_ENCODED));
+    assertEquals(BencodeInteger.encode(ZERO_INT), ZERO_INT_STRING_ENCODED);
   }
 
   @Test
   public void testEncodeNegativeInteger() {
-    assertEquals(Arrays.toString(Bencoding.encode(NEGATIVE_INT_1)), Arrays.toString(NEGATIVE_INT_1_BYTE_ENCODED));
-    assertEquals(Arrays.toString(Bencoding.encode(NEGATIVE_INT_2)), Arrays.toString(NEGATIVE_INT_2_BYTE_ENCODED));
-    assertEquals(Arrays.toString(Bencoding.encode(NEGATIVE_INT_3)), Arrays.toString(NEGATIVE_INT_3_BYTE_ENCODED));
+    assertEquals(BencodeInteger.encode(NEGATIVE_INT_1), NEGATIVE_INT_1_STRING_ENCODED);
+    assertEquals(BencodeInteger.encode(NEGATIVE_INT_2), NEGATIVE_INT_2_STRING_ENCODED);
+    assertEquals(BencodeInteger.encode(NEGATIVE_INT_3), NEGATIVE_INT_3_STRING_ENCODED);
   }
 
   @Test

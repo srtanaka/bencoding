@@ -1,7 +1,5 @@
 package srtanaka.bencoding;
 
-import java.nio.charset.Charset;
-
 /**
  * Bencoding class to encode and decode integers.
  * 
@@ -9,9 +7,8 @@ import java.nio.charset.Charset;
  * 
  */
 public class BencodeInteger {
-  private static final char PREFIX = 'i';
-  private static final char SUFFIX = 'e';
-  private static final Charset US_ASCII_CHARSET = Charset.forName("US-ASCII");
+  public static final char PREFIX = 'i';
+  public static final char SUFFIX = 'e';
 
   /**
    * @param i
@@ -27,10 +24,22 @@ public class BencodeInteger {
    * @param b
    *          - the byte string to decode
    * @return the decoded integer
+   * @throws MalformedBencodingException
+   *           if the encoding is malformed
    */
   public static int decode(byte[] b) throws MalformedBencodingException {
-    String s = new String(b, US_ASCII_CHARSET);
+    String s = new String(b, Bencoding.US_ASCII_CHARSET);
+    return BencodeInteger.decode(s);
+  }
 
+  /**
+   * @param s
+   *          - the string to decode
+   * @return the decoded integer
+   * @throws MalformedBencodingException
+   *           if the encoding is malformed
+   */
+  public static int decode(String s) throws MalformedBencodingException {
     if ( !s.startsWith(String.valueOf(BencodeInteger.PREFIX)) || !s.endsWith(String.valueOf(BencodeInteger.SUFFIX)) ) {
       throw new MalformedBencodingException("Integer not encoded properly");
     }

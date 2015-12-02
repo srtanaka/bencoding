@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
  * 
  */
 public class BencodeByteString {
-  private static final char SEPARATOR = ':';
+  public static final char SEPARATOR = ':';
   private static final Charset US_ASCII_CHARSET = Charset.forName("US-ASCII");
 
   /**
@@ -26,12 +26,22 @@ public class BencodeByteString {
    * @param b
    *          - the byte string to decode
    * @return the decoded string
-   * @throws Exception
+   * @throws MalformedBencodingException
    *           if the encoding is malformed
    */
   public static String decode(byte[] b) throws MalformedBencodingException {
     String s = new String(b, US_ASCII_CHARSET);
+    return BencodeByteString.decode(s);
+  }
 
+  /**
+   * @param s
+   *          - the string to decode
+   * @return the decoded string
+   * @throws MalformedBencodingException
+   *           if the encoding is malformed
+   */
+  public static String decode(String s) throws MalformedBencodingException {
     if ( s.indexOf(BencodeByteString.SEPARATOR) == -1 ) {
       throw new MalformedBencodingException("No separator character");
     }
