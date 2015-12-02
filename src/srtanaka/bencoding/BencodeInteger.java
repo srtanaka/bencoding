@@ -16,11 +16,11 @@ public class BencodeInteger {
   /**
    * @param i
    *          - the integer to encode
-   * @return an encoded byte string representation of the given input
+   * @return an encoded string representation of the given input
    */
-  public static byte[] encode(int i) {
-    String s = BencodeInteger.PREFIX + Integer.toString(i) + BencodeInteger.SUFFIX;
-    return s.getBytes(US_ASCII_CHARSET);
+  public static String encode(int i) {
+    String encode = BencodeInteger.PREFIX + Integer.toString(i) + BencodeInteger.SUFFIX;
+    return encode;
   }
 
   /**
@@ -31,7 +31,7 @@ public class BencodeInteger {
   public static int decode(byte[] b) throws MalformedBencodingException {
     String s = new String(b, US_ASCII_CHARSET);
 
-    if ( !s.startsWith(String.valueOf(PREFIX)) || !s.endsWith(String.valueOf(SUFFIX)) ) {
+    if ( !s.startsWith(String.valueOf(BencodeInteger.PREFIX)) || !s.endsWith(String.valueOf(BencodeInteger.SUFFIX)) ) {
       throw new MalformedBencodingException("Integer not encoded properly");
     }
 

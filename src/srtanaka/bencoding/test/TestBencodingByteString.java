@@ -9,6 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import srtanaka.bencoding.BencodeByteString;
+import srtanaka.bencoding.Bencoding;
 import srtanaka.bencoding.MalformedBencodingException;
 
 public class TestBencodingByteString {
@@ -34,14 +35,14 @@ public class TestBencodingByteString {
 
   @Test
   public void testEncodeByteString() {
-    assertEquals(Arrays.toString(BencodeByteString.encode(STRING_1)), Arrays.toString(TEST_STRING_1_BYTE_ENCODED));
-    assertEquals(Arrays.toString(BencodeByteString.encode(STRING_2)), Arrays.toString(TEST_STRING_2_BYTE_ENCODED));
-    assertEquals(Arrays.toString(BencodeByteString.encode(STRING_3)), Arrays.toString(TEST_STRING_3_BYTE_ENCODED));
+    assertEquals(Arrays.toString(Bencoding.encode(STRING_1)), Arrays.toString(TEST_STRING_1_BYTE_ENCODED));
+    assertEquals(Arrays.toString(Bencoding.encode(STRING_2)), Arrays.toString(TEST_STRING_2_BYTE_ENCODED));
+    assertEquals(Arrays.toString(Bencoding.encode(STRING_3)), Arrays.toString(TEST_STRING_3_BYTE_ENCODED));
   }
 
   @Test
   public void testEncodeEmptyByteString() {
-    assertEquals(Arrays.toString(BencodeByteString.encode(EMPTY_STRING)), Arrays.toString(EMPTY_STRING_BYTE_ENCODED));
+    assertEquals(Arrays.toString(Bencoding.encode(EMPTY_STRING)), Arrays.toString(EMPTY_STRING_BYTE_ENCODED));
   }
 
   @Test
