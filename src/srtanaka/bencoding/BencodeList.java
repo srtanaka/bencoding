@@ -2,6 +2,7 @@ package srtanaka.bencoding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Bencoding class to encode and decode lists.
@@ -31,6 +32,8 @@ public class BencodeList {
         sb.append(BencodeByteString.encode((String) o));
       } else if ( o instanceof List ) {
         sb.append(BencodeList.encode((List<Object>) o));
+      } else if ( o instanceof Map<?, ?> ) {
+        sb.append(BencodeDictionary.encode((Map<Object, Object>) o));
       }
     }
 

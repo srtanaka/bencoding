@@ -5,7 +5,9 @@ import static org.junit.Assert.fail;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,11 +43,19 @@ public class TestBencodingList {
     STRING_LIST_STRING_ENCODED + 
     "e";
 
+  static final String DICT_LIST_STRING_ENCODED = "l" + 
+    "d" +
+    TestBencodingByteString.STRING_1_STRING_ENCODED + 
+    TestBencodingByteString.STRING_2_STRING_ENCODED + 
+    "e" +
+    "e";
+
   static final String COMPLEX_LIST_STRING_ENCODED = "l" + 
     TestBencodingByteString.STRING_1_STRING_ENCODED + 
     MIXED_LIST_STRING_ENCODED +
     TestBencodingInteger.POSITIVE_INT_1_STRING_ENCODED + 
     LIST_LIST_STRING_ENCODED + 
+    DICT_LIST_STRING_ENCODED + 
     "e";
   // @formatter:on
 
@@ -53,12 +63,15 @@ public class TestBencodingList {
   static final byte[] INT_LIST_BYTE_ENCODED = INT_LIST_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
   static final byte[] MIXED_LIST_BYTE_ENCODED = MIXED_LIST_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
   static final byte[] LIST_LIST_BYTE_ENCODED = LIST_LIST_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
+  static final byte[] DICT_LIST_BYTE_ENCODED = DICT_LIST_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
   static final byte[] COMPLEX_LIST_BYTE_ENCODED = COMPLEX_LIST_STRING_ENCODED.getBytes(US_ASCII_CHARSET);
 
   private static List<Object> STRING_LIST;
   private static List<Object> INT_LIST;
   private static List<Object> MIXED_LIST;
   private static List<Object> LIST_LIST;
+  private static Map<Object, Object> TEST_DICT;
+  private static List<Object> DICT_LIST;
   private static List<Object> COMPLEX_LIST;
 
   @Before
@@ -83,13 +96,19 @@ public class TestBencodingList {
 
     LIST_LIST = new ArrayList<Object>();
     LIST_LIST.add(STRING_LIST);
-    
+
+    TEST_DICT = new HashMap<Object, Object>();
+    TEST_DICT.put(TestBencodingByteString.STRING_1, TestBencodingByteString.STRING_2);
+    DICT_LIST = new ArrayList<Object>();
+    DICT_LIST.add(TEST_DICT);
+
     COMPLEX_LIST = new ArrayList<Object>();
     COMPLEX_LIST.add(TestBencodingByteString.STRING_1);
     COMPLEX_LIST.add(MIXED_LIST);
     COMPLEX_LIST.add(TestBencodingInteger.POSITIVE_INT_1);
     COMPLEX_LIST.add(LIST_LIST);
-    }
+    COMPLEX_LIST.add(DICT_LIST);
+  }
 
   @Test
   public void testEncodeStringList() {
@@ -109,6 +128,24 @@ public class TestBencodingList {
   @Test
   public void testEncodeListList() {
     assertEquals(BencodeList.encode(LIST_LIST), LIST_LIST_STRING_ENCODED);
+  }
+
+  @Test
+  public void testEncodeDictList() {
+    try {
+      assertEquals(BencodeList.encode(DICT_LIST), DICT_LIST_STRING_ENCODED);
+    } catch ( Exception e ) {
+      fail("Throws exception: " + e.getMessage());
+    }
+  }
+
+  @Test
+  public void testEncodeComplexList() {
+    try {
+      assertEquals(BencodeList.encode(COMPLEX_LIST), COMPLEX_LIST_STRING_ENCODED);
+    } catch ( Exception e ) {
+      fail("Throws exception: " + e.getMessage());
+    }
   }
 
   @Test
